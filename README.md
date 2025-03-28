@@ -25,10 +25,33 @@ Explora el mundo de los fractales con este visualizador interactivo desarrollado
 
 ## 📸 Capturas de Pantalla
 
-*Próximamente se añadirán imágenes representativas del proyecto.*
+Visualizaciones renderizadas directamente con Fract-ol.
 
 ---
 
+### 🌪 Lorenz Attractor
+
+| Variante 1 | Variante Compleja |
+|------------|-------------------|
+| ![](https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-28%2002-19-26.png) | ![](https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-20%2000-36-21.png) |
+
+---
+
+### 🌊 Conjuntos de Julia
+
+| Zoom Central | Reverse | 
+|--------------|---------|
+| ![](https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-24%2006-13-12.png) | ![](https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-24%2007-00-57.png) |
+
+---
+
+### 🕳 Conjunto de Mandelbrot
+
+| Vista Principal | Ampliación Lateral |
+|-----------------|--------------------|
+| ![](https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-20%2005-07-50.png) | ![](https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-28%2004-05-28.png) |
+
+---
 ## ⚙️ Requisitos del Sistema
 
 Asegúrate de tener instaladas las siguientes dependencias:
