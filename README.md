@@ -43,10 +43,18 @@ git clone https://github.com/42Paris/minilibx-linux.git
 # Compila el proyecto
 make
 ```
+---
+
+
+## 📘 Aprende más sobre MiniLibX
+
+¿Nuevo con MiniLibX? Consulta la guía completa con explicaciones detalladas de cada función y cómo se comunica con tu sistema operativo:
+
+👉 [Guía Completa de MiniLibX](./MiniLibX_GuiaCompleta.md)
 
 ---
 
-## 🧪 Ejercicios de Aprendizaje con MiniLibX
+### 🧪 Ejercicios de Aprendizaje con MiniLibX
 
 Esta serie de ejercicios sirve como preparación y entrenamiento para dominar MiniLibX. Desde la creación de ventanas hasta animaciones simples, cada uno te familiarizará con los fundamentos necesarios para `fract-ol`.
 
@@ -66,14 +74,6 @@ Esta serie de ejercicios sirve como preparación y entrenamiento para dominar Mi
 ## 🧠 Objetivo
 
 Este proyecto es una oportunidad para explorar gráficos generativos, matemáticas visuales y el control de bajo nivel sobre píxeles en pantalla. ¡Sumérgete y descubre la belleza oculta de los fractales!
-
----
-
-## 📘 Aprende más sobre MiniLibX
-
-¿Nuevo con MiniLibX? Consulta la guía completa con explicaciones detalladas de cada función y cómo se comunica con tu sistema operativo:
-
-👉 [Guía Completa de MiniLibX](./MiniLibX_GuiaCompleta.md)
 
 ---
 ## 📚 Créditos
