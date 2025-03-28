@@ -30,15 +30,15 @@ Visualizaciones renderizadas directamente con Fract-ol.
 
 | Variante 1 | Variante Compleja |
 |------------|-------------------|
-| ![](https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-28%2002-19-26.png) | ![](https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-20%2000-36-21.png) |
+| <img src="https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-28%2002-19-26.png" width="340"/> | <img src="https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-20%2000-36-21.png" width="340"/> |
 
 ---
 
 ### 🌊 Conjuntos de Julia
 
-| Zoom Central | Reverse | 
+| Zoom Central | Reverse |
 |--------------|---------|
-| ![](https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-24%2006-13-12.png) | ![](https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-24%2007-00-57.png) |
+| <img src="https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-24%2006-13-12.png" width="340"/> | <img src="https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-24%2007-00-57.png" width="340"/> |
 
 ---
 
@@ -46,7 +46,7 @@ Visualizaciones renderizadas directamente con Fract-ol.
 
 | Vista Principal | Ampliación Lateral |
 |-----------------|--------------------|
-| ![](https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-20%2005-07-50.png) | ![](https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-28%2004-05-28.png) |
+| <img src="https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-20%2005-07-50.png" width="340"/> | <img src="https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-28%2004-05-28.png" width="340"/> |
 
 ---
 ## ⚙️ Requisitos del Sistema
