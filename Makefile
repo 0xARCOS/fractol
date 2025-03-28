@@ -5,33 +5,42 @@ NAME = fractol
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes -Iminilibx-linux -Isrc -g3 -Ofast -march=native -funroll-loops -flto
 
-# Archivos fuente dentro de src/
-SRCS = $(wildcard src/*.c)
-OBJS = $(SRCS:.c=.o)
-
-# Directorio de MiniLibX
+# Directorios
+SRC_DIR = src
+EJERS_DIR = ejers
 MLX_DIR = minilibx-linux
+
+# Flags para MiniLibX
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+
+# Archivos fuente
+SRCS = $(wildcard $(SRC_DIR)/*.c)
+OBJS = $(SRCS:.c=.o)
 
 # Regla principal
 all: $(NAME)
 
-# Compilar fractol
+# Compilar ejecutable principal
 $(NAME): $(OBJS)
-	@make -C $(MLX_DIR) # Compilar MiniLibX si es necesario
+	@make -C $(MLX_DIR)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(MLX_FLAGS)
 
-# Regla para compilar archivos .c en .o dentro de src/
-src/%.o: src/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+# Compilación de ejercicios (test)
+EJERS_SRCS = $(wildcard $(EJERS_DIR)/*.c)
+EJERS_BINS = $(patsubst $(EJERS_DIR)/%.c, $(EJERS_DIR)/%, $(EJERS_SRCS))
 
-# Limpiar archivos objeto
+test: $(EJERS_BINS)
+
+$(EJERS_DIR)/%: $(EJERS_DIR)/%.c
+	$(CC) $(CFLAGS) -o $@ $< -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+
+# Limpiar objetos
 clean:
 	rm -f $(OBJS)
 
-# Limpiar todo (ejecutable + objetos)
+# Limpiar todo
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(EJERS_BINS)
 
 # Recompilar desde cero
 re: fclean all
