@@ -69,6 +69,13 @@ Este proyecto es una oportunidad para explorar gráficos generativos, matemátic
 
 ---
 
+## 📘 Aprende más sobre MiniLibX
+
+¿Nuevo con MiniLibX? Consulta la guía completa con explicaciones detalladas de cada función y cómo se comunica con tu sistema operativo:
+
+👉 [Guía Completa de MiniLibX](./MiniLibX_GuiaCompleta.md)
+
+---
 ## 📚 Créditos
 
 Desarrollado como parte del programa de la escuela 42.  
