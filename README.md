@@ -8,9 +8,6 @@
     <img src="https://api.visitorbadge.io/api/visitors?user=0xARCOS&repo=fractol_42&label=visitas&countColor=%2385e3ff&style=flat&labelStyle=none"/>
 </div>
 
-
-# 🔮 Fract-ol
-
 Explora el mundo de los fractales con este visualizador interactivo desarrollado con **MiniLibX** (42). Sumérgete en las complejidades matemáticas y visuales de los conjuntos Mandelbrot, Julia y el atractor de Lorenz.
 
 ---
