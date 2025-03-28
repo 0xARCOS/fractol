@@ -39,17 +39,16 @@ make
 
 ## 🧪 Ejercicios de Aprendizaje con MiniLibX
 
-Estos ejercicios fueron desarrollados como preparación para el proyecto `fract-ol`. Muestran paso a paso cómo usar MiniLibX en C para dibujar píxeles, manejar eventos y animar objetos.
+Estos ejercicios fueron desarrollados como preparación para el proyecto `fract-ol`. Sirven como guía para familiarizarse con la MiniLibX y conceptos fundamentales como eventos, píxeles, animaciones y dibujo de formas.
 
-| Nº | Descripción                          |
-|----|--------------------------------------|
-| 1  | Inicialización y creación de ventana |
-| 2  | Cierre con tecla `ESC`               |
-| 3  | Dibujar un píxel en pantalla         |
-| 4  | Usar `mlx_pixel_put()` directamente  |
-| 5  | Algoritmo de Bresenham (línea)       |
-| 6  | Crear un degradado horizontal        |
-| 7  | Dibujar un cuadrado y moverlo con flechas |
-| 8  | Animación: cuadrado que rebota solo  |
+| Nº | Nombre                                  | Descripción                                           |
+|----|-----------------------------------------|-------------------------------------------------------|
+| 1  | [Ex_1.c](./ejers_minilibx/Ex_1.c)       | Inicialización y creación de ventana                 |
+| 2  | [Ex_2.c](./ejers_minilibx/Ex_2.c)       | Manejo de evento `ESC` para cerrar ventana           |
+| 3  | [Ex_3.c](./ejers_minilibx/Ex_3.c)       | Dibujar un píxel con `my_mlx_pixel_put`             |
+| 4  | [Ex_4.c](./ejers_minilibx/Ex_4.c)       | Usar `mlx_pixel_put()` directamente                  |
+| 5  | [Ex_5.c](./ejers_minilibx/Ex_5.c)       | Dibujo de línea con algoritmo de Bresenham          |
+| 6  | [Ex_6.c](./ejers_minilibx/Ex_6.c)       | Crear un degradado de color horizontal               |
+| 7  | [Ex_7.c](./ejers_minilibx/Ex_7.c)       | Cuadrado que se mueve con las flechas                |
+| 8  | [Ex_8.c](./ejers_minilibx/Ex_8.c)       | Animación: cuadrado que rebota solo                  |
 
-Todos los archivos están disponibles en la carpeta `./exercises` (o como prefieras organizarlo).
