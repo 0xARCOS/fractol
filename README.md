@@ -65,7 +65,7 @@ Asegúrate de tener instaladas las siguientes dependencias:
 
 ```bash
 # Clona el repositorio
-git clone https://github.com/tu_usuario/fract-ol.git
+git clone https://github.com/0XARCOS/fract-ol.git
 cd fract-ol
 
 # Clona la MiniLibX (versión Linux)
