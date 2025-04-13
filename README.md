@@ -104,11 +104,10 @@ Esta serie de ejercicios sirve como preparación y entrenamiento para dominar Mi
 
 ## 🧠 Objetivo
 
-Este proyecto es una oportunidad para explorar gráficos generativos, matemáticas visuales y el control de bajo nivel sobre píxeles en pantalla. ¡Sumérgete y descubre la belleza oculta de los fractales!
+Este proyecto es una oportunidad para explorar gráficos generativos, matemáticas visuales y el control de bajo nivel sobre píxeles en pantalla.
 
 ---
 ## 📚 Créditos
 
-Desarrollado como parte del programa de la escuela 42.  
-Inspirado por la belleza matemática del caos.
+Desarrollado como parte del programa de la escuela 42.
 
