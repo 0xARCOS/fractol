@@ -44,7 +44,7 @@ Visualizaciones renderizadas directamente con Fract-ol.
 
 ### 🕳 Conjunto de Mandelbrot
 
-| Vista Principal | Ampliación Lateral |
+| Vista Principal | Reverse |
 |-----------------|--------------------|
 | <img src="https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-20%2005-07-50.png" width="340"/> | <img src="https://github.com/0xARCOS/fractol_42/blob/main/img/Screenshot%20from%202025-03-28%2004-05-28.png" width="340"/> |
 
