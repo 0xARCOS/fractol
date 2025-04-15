@@ -5,21 +5,6 @@ Una introducción clara, visual y profunda a la biblioteca gráfica utilizada en
 
 ---
 
-## 📘 Índice Rápido
-
-- [Introduccion](#introduccion)
-- [Funciones Basicas](#funciones-basicas)
-- [Como Funciona MiniLibX](#como-funciona-minilibx)
-- [Nivel Maquina: Dibujo y Memoria](#nivel-maquina-dibujo-y-memoria)
-- [Buenas Practicas](#buenas-practicas)
-- [Tareas por Nivel](#tareas-por-nivel)
-- [Recursos Recomendados](#recursos-recomendados)
-- [Ejemplos Visuales y Diagramas](#ejemplos-visuales-y-diagramas)
-
-
-
----
-
 ## 🔰 Introducción
 
 **MiniLibX** es una biblioteca gráfica ligera que permite:
