@@ -81,7 +81,7 @@ make
 
 ¿Nuevo con MiniLibX? Consulta la guía completa con explicaciones detalladas de cada función y cómo se comunica con tu sistema operativo:
 
-👉 [Guía Completa de MiniLibX](./MiniLibX_GuiaCompleta.md)
+👉 [Guía MiniLibX](./MiniLibX_GuiaCompleta.md)
 
 ---
 
