@@ -1,4 +1,5 @@
-import * as THREE from 'three';
+// Lazy load Three.js for better performance
+let THREE;
 
 // ==================== APPLICATION STATE ====================
 const state = {
@@ -39,6 +40,11 @@ async function init() {
         // Show loading screen
         updateProgress(10);
 
+        // Lazy load Three.js
+        console.log('Loading Three.js...');
+        THREE = await import('three');
+        updateProgress(20);
+
         // Setup Three.js
         console.log('Setting up Three.js...');
         setupThreeJS();
@@ -68,11 +74,22 @@ async function init() {
         // Hide loading screen after short delay
         setTimeout(() => {
             console.log('✅ App loaded successfully!');
-            document.getElementById('loading-screen').classList.add('fade-out');
+            const loadingScreen = document.getElementById('loading-screen');
+            loadingScreen.classList.add('fade-out');
             setTimeout(() => {
-                document.getElementById('loading-screen').style.display = 'none';
+                loadingScreen.style.display = 'none';
+                // Free up memory
+                loadingScreen.remove();
             }, 500);
-        }, 500);
+        }, 300);
+
+        // Initialize non-critical features when browser is idle
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                console.log('Initializing non-critical features...');
+                // Prefetch additional resources if needed
+            }, { timeout: 2000 });
+        }
     } catch (error) {
         console.error('❌ Error initializing app:', error);
         alert('Error cargando la aplicación. Por favor recarga la página.\n\nError: ' + error.message);
@@ -131,14 +148,28 @@ function detectPerformance() {
     // Auto-adjust quality based on device
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const hasGoodGPU = renderer.capabilities.maxTextures > 16;
+    const hasHighMemory = navigator.deviceMemory ? navigator.deviceMemory >= 4 : true;
+    const hasGoodCPU = navigator.hardwareConcurrency ? navigator.hardwareConcurrency >= 4 : true;
 
-    if (isMobile && !hasGoodGPU) {
+    if (isMobile && (!hasGoodGPU || !hasHighMemory)) {
         state.quality = 'low';
-    } else if (isMobile) {
+        console.log('🔧 Performance mode: LOW');
+    } else if (isMobile || !hasGoodCPU) {
         state.quality = 'medium';
+        console.log('🔧 Performance mode: MEDIUM');
     } else {
         state.quality = 'high';
+        console.log('🔧 Performance mode: HIGH');
     }
+
+    // Adaptive performance: reduce quality if FPS is too low
+    setInterval(() => {
+        if (fps < 30 && state.quality !== 'low') {
+            console.warn('⚠️ Low FPS detected, reducing quality...');
+            state.quality = state.quality === 'high' ? 'medium' : 'low';
+            createFractal(state.currentFractal);
+        }
+    }, 5000);
 }
 
 // ==================== FRACTAL GENERATION ====================
@@ -632,8 +663,21 @@ function toggleFullscreen() {
 }
 
 // ==================== ANIMATION LOOP ====================
+let animationFrameId;
+let isVisible = true;
+
+// Pause animation when tab is not visible
+document.addEventListener('visibilitychange', () => {
+    isVisible = !document.hidden;
+    if (isVisible && !animationFrameId) {
+        animate();
+    }
+});
+
 function animate() {
-    requestAnimationFrame(animate);
+    if (!isVisible) return;
+
+    animationFrameId = requestAnimationFrame(animate);
 
     const delta = clock.getDelta();
     time += delta * state.speed;
