@@ -14,6 +14,7 @@
 # define FRACTOL_H
 
 # include "../minilibx-linux/mlx.h"
+# include "fractal_soul.h"
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
