@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Experiencia inmersiva de fractales 3D psicodélicos para móviles">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>🌀 Fractal 3D Experience</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Preload Three.js -->
+    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.module.js">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="fractal-loader"></div>
+            <h1>🌀 FRACTAL DIMENSION</h1>
+            <p>Preparando experiencia...</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Canvas -->
+    <canvas id="fractal-canvas"></canvas>
+
+    <!-- Particle Background -->
+    <div id="particles"></div>
+
+    <!-- UI Controls -->
+    <div id="ui-container" class="hidden">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="fractal-name" id="fractal-name">Mandelbulb</div>
+            <div class="fps-counter" id="fps-counter">60 FPS</div>
+        </div>
+
+        <!-- Bottom Controls -->
+        <div class="bottom-controls">
+            <!-- Fractal Selector -->
+            <div class="control-panel">
+                <h3>🎨 Fractales</h3>
+                <div class="fractal-buttons">
+                    <button class="fractal-btn active" data-fractal="mandelbulb">
+                        <span class="icon">🔮</span>
+                        <span>Mandelbulb</span>
+                    </button>
+                    <button class="fractal-btn" data-fractal="julia3d">
+                        <span class="icon">✨</span>
+                        <span>Julia 3D</span>
+                    </button>
+                    <button class="fractal-btn" data-fractal="sierpinski">
+                        <span class="icon">🔺</span>
+                        <span>Sierpinski</span>
+                    </button>
+                    <button class="fractal-btn" data-fractal="menger">
+                        <span class="icon">🧊</span>
+                        <span>Menger</span>
+                    </button>
+                    <button class="fractal-btn" data-fractal="psychedelic">
+                        <span class="icon">🌈</span>
+                        <span>Psychedelic</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Color Schemes -->
+            <div class="control-panel">
+                <h3>🎨 Colores</h3>
+                <div class="color-buttons">
+                    <button class="color-btn" data-color="rainbow" style="background: linear-gradient(135deg, #ff0080, #ff8c00, #40e0d0);">Rainbow</button>
+                    <button class="color-btn" data-color="galaxy" style="background: linear-gradient(135deg, #000428, #004e92);">Galaxy</button>
+                    <button class="color-btn" data-color="fire" style="background: linear-gradient(135deg, #f00, #fc0, #ff0);">Fire</button>
+                    <button class="color-btn" data-color="ocean" style="background: linear-gradient(135deg, #00f, #0ff, #0f0);">Ocean</button>
+                    <button class="color-btn" data-color="neon" style="background: linear-gradient(135deg, #f0f, #0ff, #0f0);">Neon</button>
+                    <button class="color-btn" data-color="sunset" style="background: linear-gradient(135deg, #ff6b6b, #feca57, #ee5a6f);">Sunset</button>
+                </div>
+            </div>
+
+            <!-- Effects -->
+            <div class="control-panel">
+                <h3>✨ Efectos</h3>
+                <div class="effect-toggles">
+                    <button class="toggle-btn active" data-effect="rotation" id="rotation-toggle">
+                        <span>🔄</span> Auto-Rotar
+                    </button>
+                    <button class="toggle-btn active" data-effect="particles" id="particles-toggle">
+                        <span>⭐</span> Partículas
+                    </button>
+                    <button class="toggle-btn" data-effect="pulse" id="pulse-toggle">
+                        <span>💓</span> Pulso
+                    </button>
+                    <button class="toggle-btn" data-effect="glitch" id="glitch-toggle">
+                        <span>📺</span> Glitch
+                    </button>
+                </div>
+            </div>
+
+            <!-- Speed Control -->
+            <div class="control-panel">
+                <h3>⚡ Velocidad</h3>
+                <input type="range" id="speed-slider" min="0" max="200" value="100" class="slider">
+                <div class="slider-labels">
+                    <span>Lento</span>
+                    <span>Rápido</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toggle UI Button -->
+        <button id="toggle-ui" class="toggle-ui-btn">
+            <span class="show-ui">☰</span>
+            <span class="hide-ui">✕</span>
+        </button>
+
+        <!-- Reset Button -->
+        <button id="reset-btn" class="reset-btn" title="Reset cámara">
+            <span>🎯</span>
+        </button>
+
+        <!-- Fullscreen Button -->
+        <button id="fullscreen-btn" class="fullscreen-btn" title="Pantalla completa">
+            <span>⛶</span>
+        </button>
+    </div>
+
+    <!-- Instructions Overlay -->
+    <div id="instructions" class="instructions">
+        <div class="instruction-content">
+            <h2>🌀 Cómo usar</h2>
+            <div class="instruction-item">
+                <span class="instruction-icon">👆</span>
+                <p><strong>Un dedo:</strong> Rotar fractal</p>
+            </div>
+            <div class="instruction-item">
+                <span class="instruction-icon">🤏</span>
+                <p><strong>Pinch:</strong> Zoom in/out</p>
+            </div>
+            <div class="instruction-item">
+                <span class="instruction-icon">✌️</span>
+                <p><strong>Dos dedos:</strong> Mover cámara</p>
+            </div>
+            <div class="instruction-item">
+                <span class="instruction-icon">👇</span>
+                <p><strong>Tap doble:</strong> Reset vista</p>
+            </div>
+            <button id="start-btn" class="start-btn">Comenzar Experiencia</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.159.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

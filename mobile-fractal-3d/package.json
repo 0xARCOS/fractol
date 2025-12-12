@@ -1,0 +1,23 @@
+{
+  "name": "fractal-3d-mobile",
+  "version": "1.0.0",
+  "description": "Immersive 3D psychedelic fractal experience for mobile devices",
+  "main": "public/index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8080 --directory public",
+    "test": "node test/test.js"
+  },
+  "keywords": [
+    "fractal",
+    "3d",
+    "webgl",
+    "threejs",
+    "psychedelic",
+    "mobile"
+  ],
+  "author": "0xARCOS",
+  "license": "MIT",
+  "dependencies": {
+    "three": "^0.159.0"
+  }
+}
