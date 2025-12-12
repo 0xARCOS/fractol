@@ -31,8 +31,6 @@
     <link rel="stylesheet" href="style.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="style.css"></noscript>
 
-    <!-- Preload Three.js -->
-    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.module.js">
 </head>
 <body>
     <!-- Loading Screen -->
@@ -110,15 +108,6 @@
                     <button class="toggle-btn active" data-effect="rotation" id="rotation-toggle">
                         <span>🔄</span> Auto-Rotar
                     </button>
-                    <button class="toggle-btn active" data-effect="particles" id="particles-toggle">
-                        <span>⭐</span> Partículas
-                    </button>
-                    <button class="toggle-btn" data-effect="pulse" id="pulse-toggle">
-                        <span>💓</span> Pulso
-                    </button>
-                    <button class="toggle-btn" data-effect="glitch" id="glitch-toggle">
-                        <span>📺</span> Glitch
-                    </button>
                 </div>
             </div>
 
@@ -174,16 +163,8 @@
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script type="importmap">
-    {
-        "imports": {
-            "three": "https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.module.js",
-            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.159.0/examples/jsm/"
-        }
-    }
-    </script>
-    <script type="module" src="app.js"></script>
+    <!-- Ultra-Light Fractal Engine (no dependencies!) -->
+    <script src="app-lite.js"></script>
 
     <!-- Service Worker Registration -->
     <script>

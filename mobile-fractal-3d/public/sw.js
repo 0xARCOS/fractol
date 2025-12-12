@@ -1,20 +1,17 @@
 // Service Worker for Fractal 3D Experience
-// Version 1.0.0 - Optimized for performance
+// Version 2.0.0 - Ultra-light (no Three.js dependency!)
 
-const CACHE_VERSION = 'fractal-3d-v1.0.0';
+const CACHE_VERSION = 'fractal-3d-v2.0.0';
 const RUNTIME_CACHE = 'fractal-3d-runtime';
 
 // Assets to cache immediately
 const PRECACHE_ASSETS = [
     '/',
     '/index.html',
-    '/app.js',
+    '/app-lite.js',
     '/style.css',
     '/manifest.json'
 ];
-
-// CDN assets to cache on first use
-const CDN_CACHE = 'fractal-3d-cdn';
 
 // Install event - cache critical assets
 self.addEventListener('install', (event) => {
@@ -52,27 +49,6 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
     const { request } = event;
     const url = new URL(request.url);
-
-    // Handle CDN requests (Three.js)
-    if (url.hostname === 'cdn.jsdelivr.net') {
-        event.respondWith(
-            caches.open(CDN_CACHE).then((cache) => {
-                return cache.match(request).then((response) => {
-                    if (response) {
-                        return response;
-                    }
-                    return fetch(request).then((networkResponse) => {
-                        // Cache successful responses
-                        if (networkResponse && networkResponse.status === 200) {
-                            cache.put(request, networkResponse.clone());
-                        }
-                        return networkResponse;
-                    });
-                });
-            })
-        );
-        return;
-    }
 
     // Handle app assets - Cache First strategy
     if (url.origin === location.origin) {
