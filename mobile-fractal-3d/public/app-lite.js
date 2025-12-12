@@ -432,6 +432,37 @@ function setupUI() {
         state.rotation = { x: 0, y: 0 };
         state.zoom = 3.5;
     });
+
+    // Start button
+    const startBtn = document.getElementById('start-btn');
+    if (startBtn) {
+        startBtn.addEventListener('click', () => {
+            document.getElementById('instructions').classList.add('hidden');
+            document.getElementById('ui-container').classList.remove('hidden');
+        });
+    }
+
+    // Fullscreen button
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    if (fullscreenBtn) {
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        });
+    }
+
+    // Toggle UI button
+    const toggleUIBtn = document.getElementById('toggle-ui');
+    if (toggleUIBtn) {
+        toggleUIBtn.addEventListener('click', () => {
+            document.querySelector('.bottom-controls').classList.toggle('collapsed');
+        });
+    }
 }
 
 // Visibility API
