@@ -33,37 +33,50 @@ let lastTapTime = 0;
 
 // ==================== INITIALIZATION ====================
 async function init() {
-    // Show loading screen
-    updateProgress(10);
+    try {
+        console.log('🌀 Starting Fractal 3D Experience...');
 
-    // Setup Three.js
-    setupThreeJS();
-    updateProgress(30);
+        // Show loading screen
+        updateProgress(10);
 
-    // Create initial fractal
-    await createFractal(state.currentFractal);
-    updateProgress(50);
+        // Setup Three.js
+        console.log('Setting up Three.js...');
+        setupThreeJS();
+        updateProgress(30);
 
-    // Create particle system
-    createParticles();
-    updateProgress(70);
+        // Create initial fractal
+        console.log('Creating fractal...');
+        createFractal(state.currentFractal);
+        updateProgress(50);
 
-    // Setup controls
-    setupTouchControls();
-    setupUI();
-    updateProgress(90);
+        // Create particle system
+        console.log('Creating particles...');
+        createParticles();
+        updateProgress(70);
 
-    // Start animation loop
-    animate();
-    updateProgress(100);
+        // Setup controls
+        console.log('Setting up controls...');
+        setupTouchControls();
+        setupUI();
+        updateProgress(90);
 
-    // Hide loading screen after short delay
-    setTimeout(() => {
-        document.getElementById('loading-screen').classList.add('fade-out');
+        // Start animation loop
+        console.log('Starting animation...');
+        animate();
+        updateProgress(100);
+
+        // Hide loading screen after short delay
         setTimeout(() => {
-            document.getElementById('loading-screen').style.display = 'none';
+            console.log('✅ App loaded successfully!');
+            document.getElementById('loading-screen').classList.add('fade-out');
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.display = 'none';
+            }, 500);
         }, 500);
-    }, 500);
+    } catch (error) {
+        console.error('❌ Error initializing app:', error);
+        alert('Error cargando la aplicación. Por favor recarga la página.\n\nError: ' + error.message);
+    }
 }
 
 function setupThreeJS() {
@@ -129,37 +142,41 @@ function detectPerformance() {
 }
 
 // ==================== FRACTAL GENERATION ====================
-async function createFractal(type) {
-    // Remove existing fractal
-    if (fractalMesh) {
-        scene.remove(fractalMesh);
-        fractalMesh.geometry.dispose();
-        fractalMesh.material.dispose();
-    }
+function createFractal(type) {
+    try {
+        // Remove existing fractal
+        if (fractalMesh) {
+            scene.remove(fractalMesh);
+            if (fractalMesh.geometry) fractalMesh.geometry.dispose();
+            if (fractalMesh.material) fractalMesh.material.dispose();
+        }
 
-    // Create new fractal based on type
-    switch(type) {
-        case 'mandelbulb':
-            fractalMesh = createMandelbulb();
-            break;
-        case 'julia3d':
-            fractalMesh = createJulia3D();
-            break;
-        case 'sierpinski':
-            fractalMesh = createSierpinski();
-            break;
-        case 'menger':
-            fractalMesh = createMenger();
-            break;
-        case 'psychedelic':
-            fractalMesh = createPsychedelicSphere();
-            break;
-        default:
-            fractalMesh = createMandelbulb();
-    }
+        // Create new fractal based on type
+        switch(type) {
+            case 'mandelbulb':
+                fractalMesh = createMandelbulb();
+                break;
+            case 'julia3d':
+                fractalMesh = createJulia3D();
+                break;
+            case 'sierpinski':
+                fractalMesh = createSierpinski();
+                break;
+            case 'menger':
+                fractalMesh = createMenger();
+                break;
+            case 'psychedelic':
+                fractalMesh = createPsychedelicSphere();
+                break;
+            default:
+                fractalMesh = createMandelbulb();
+        }
 
-    scene.add(fractalMesh);
-    updateColorScheme(state.currentColorScheme);
+        scene.add(fractalMesh);
+        updateColorScheme(state.currentColorScheme);
+    } catch (error) {
+        console.error('Error creating fractal:', error);
+    }
 }
 
 function createMandelbulb() {
@@ -535,13 +552,13 @@ function resetCamera() {
 function setupUI() {
     // Fractal buttons
     document.querySelectorAll('.fractal-btn').forEach(btn => {
-        btn.addEventListener('click', async () => {
+        btn.addEventListener('click', () => {
             document.querySelectorAll('.fractal-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
             const fractalType = btn.dataset.fractal;
             state.currentFractal = fractalType;
-            await createFractal(fractalType);
+            createFractal(fractalType);
 
             document.getElementById('fractal-name').textContent =
                 fractalType.charAt(0).toUpperCase() + fractalType.slice(1);

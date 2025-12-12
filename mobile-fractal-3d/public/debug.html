@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Debug - Fractal 3D</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #000;
+            color: #0f0;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            color: #0ff;
+        }
+        .test {
+            margin: 10px 0;
+            padding: 10px;
+            background: #111;
+            border-left: 3px solid #0f0;
+        }
+        .test.error {
+            border-left-color: #f00;
+            color: #f00;
+        }
+        .test.warning {
+            border-left-color: #ff0;
+            color: #ff0;
+        }
+        #console {
+            background: #111;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #333;
+        }
+        .log {
+            margin: 5px 0;
+        }
+        .log.error {
+            color: #f00;
+        }
+        .log.warn {
+            color: #ff0;
+        }
+        .log.info {
+            color: #0ff;
+        }
+        button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            cursor: pointer;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #0ff;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Diagnóstico Fractal 3D</h1>
+
+    <div id="tests"></div>
+
+    <h2>📋 Consola</h2>
+    <div id="console"></div>
+
+    <h2>🔧 Acciones</h2>
+    <button onclick="testThreeJS()">Test Three.js</button>
+    <button onclick="testWebGL()">Test WebGL</button>
+    <button onclick="window.location.href='index.html'">Ir a App</button>
+    <button onclick="location.reload()">Recargar</button>
+
+    <script type="module">
+        const testsDiv = document.getElementById('tests');
+        const consoleDiv = document.getElementById('console');
+
+        // Capturar console.log
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addToConsole('info', args.join(' '));
+        };
+
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addToConsole('error', args.join(' '));
+        };
+
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addToConsole('warn', args.join(' '));
+        };
+
+        function addToConsole(type, message) {
+            const div = document.createElement('div');
+            div.className = 'log ' + type;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            consoleDiv.appendChild(div);
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+        function addTest(name, status, message) {
+            const div = document.createElement('div');
+            div.className = 'test' + (status === 'error' ? ' error' : status === 'warning' ? ' warning' : '');
+            const icon = status === 'error' ? '❌' : status === 'warning' ? '⚠️' : '✅';
+            div.textContent = `${icon} ${name}: ${message}`;
+            testsDiv.appendChild(div);
+        }
+
+        // Tests automáticos
+        console.log('Iniciando diagnóstico...');
+
+        // 1. Test HTML files
+        addTest('Archivos HTML', 'ok', 'index.html cargado correctamente');
+
+        // 2. Test JavaScript modules
+        try {
+            if (!('noModule' in HTMLScriptElement.prototype)) {
+                addTest('ES Modules', 'error', 'Tu navegador no soporta ES modules');
+            } else {
+                addTest('ES Modules', 'ok', 'ES modules soportados');
+            }
+        } catch (e) {
+            addTest('ES Modules', 'error', e.message);
+        }
+
+        // 3. Test WebGL
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (gl) {
+            const renderer = gl.getParameter(gl.RENDERER);
+            const vendor = gl.getParameter(gl.VENDOR);
+            addTest('WebGL', 'ok', `Disponible (${vendor} - ${renderer})`);
+        } else {
+            addTest('WebGL', 'error', 'WebGL no disponible en este dispositivo');
+        }
+
+        // 4. Test Touch Events
+        if ('ontouchstart' in window) {
+            addTest('Touch Events', 'ok', 'Soportados');
+        } else {
+            addTest('Touch Events', 'warning', 'No soportados (usar ratón)');
+        }
+
+        // 5. Test Device Info
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        addTest('Dispositivo', 'ok', isMobile ? 'Móvil detectado' : 'Desktop detectado');
+        addTest('User Agent', 'ok', navigator.userAgent.substring(0, 50) + '...');
+        addTest('Pantalla', 'ok', `${window.innerWidth}x${window.innerHeight}`);
+        addTest('Pixel Ratio', 'ok', window.devicePixelRatio);
+
+        // 6. Test Import Maps
+        if (HTMLScriptElement.supports && HTMLScriptElement.supports('importmap')) {
+            addTest('Import Maps', 'ok', 'Soportados');
+        } else {
+            addTest('Import Maps', 'warning', 'No soportados nativamente (puede funcionar con polyfill)');
+        }
+
+        // 7. Test Three.js loading
+        console.log('Intentando cargar Three.js...');
+
+        window.testThreeJS = async function() {
+            try {
+                const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.module.js');
+                console.log('Three.js cargado exitosamente:', THREE);
+                addTest('Three.js CDN', 'ok', 'Version: ' + THREE.REVISION);
+
+                // Test crear escena
+                const scene = new THREE.Scene();
+                console.log('Escena creada:', scene);
+                addTest('Three.js Scene', 'ok', 'Escena creada correctamente');
+
+                return true;
+            } catch (error) {
+                console.error('Error cargando Three.js:', error);
+                addTest('Three.js CDN', 'error', error.message);
+                return false;
+            }
+        };
+
+        window.testWebGL = function() {
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+            if (!gl) {
+                addTest('WebGL Test', 'error', 'No se puede crear contexto WebGL');
+                return false;
+            }
+
+            // Info detallada
+            console.log('WebGL Info:');
+            console.log('  Version:', gl.getParameter(gl.VERSION));
+            console.log('  GLSL Version:', gl.getParameter(gl.SHADING_LANGUAGE_VERSION));
+            console.log('  Vendor:', gl.getParameter(gl.VENDOR));
+            console.log('  Renderer:', gl.getParameter(gl.RENDERER));
+            console.log('  Max Texture Size:', gl.getParameter(gl.MAX_TEXTURE_SIZE));
+            console.log('  Max Vertex Attribs:', gl.getParameter(gl.MAX_VERTEX_ATTRIBS));
+
+            addTest('WebGL Detallado', 'ok', 'Ver consola para detalles');
+            return true;
+        };
+
+        // Auto-test Three.js
+        setTimeout(() => {
+            testThreeJS();
+        }, 1000);
+
+        console.log('Diagnóstico completado.');
+        console.log('Si ves errores arriba, compártelos para ayudarte.');
+    </script>
+</body>
+</html>
