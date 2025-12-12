@@ -33,37 +33,60 @@ let lastTapTime = 0;
 
 // ==================== INITIALIZATION ====================
 async function init() {
-    // Show loading screen
-    updateProgress(10);
+    try {
+        // Show loading screen
+        updateProgress(5, 'Iniciando...');
 
-    // Setup Three.js
-    setupThreeJS();
-    updateProgress(30);
+        // Check if Three.js loaded
+        if (typeof THREE === 'undefined') {
+            throw new Error('Three.js no se pudo cargar. Verifica tu conexión a internet.');
+        }
 
-    // Create initial fractal
-    await createFractal(state.currentFractal);
-    updateProgress(50);
+        updateProgress(10, 'Three.js cargado');
 
-    // Create particle system
-    createParticles();
-    updateProgress(70);
+        // Setup Three.js
+        setupThreeJS();
+        updateProgress(30, 'Configurando escena 3D...');
 
-    // Setup controls
-    setupTouchControls();
-    setupUI();
-    updateProgress(90);
+        // Create initial fractal (simplified for faster load)
+        await createFractal(state.currentFractal);
+        updateProgress(60, 'Generando fractal...');
 
-    // Start animation loop
-    animate();
-    updateProgress(100);
+        // Create particle system
+        createParticles();
+        updateProgress(80, 'Añadiendo partículas...');
 
-    // Hide loading screen after short delay
-    setTimeout(() => {
-        document.getElementById('loading-screen').classList.add('fade-out');
+        // Setup controls
+        setupTouchControls();
+        setupUI();
+        updateProgress(95, 'Configurando controles...');
+
+        // Start animation loop
+        animate();
+        updateProgress(100, 'Listo!');
+
+        // Hide loading screen after short delay
         setTimeout(() => {
-            document.getElementById('loading-screen').style.display = 'none';
-        }, 500);
-    }, 500);
+            document.getElementById('loading-screen').classList.add('fade-out');
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.display = 'none';
+            }, 500);
+        }, 300);
+
+    } catch (error) {
+        console.error('Error durante la inicialización:', error);
+        showError('Error: ' + error.message + '\n\nRecarga la página o verifica tu conexión.');
+    }
+}
+
+function showError(message) {
+    const errorEl = document.getElementById('error-message');
+    const loadingText = document.getElementById('loading-text');
+    if (errorEl && loadingText) {
+        loadingText.textContent = '❌ Error al cargar';
+        errorEl.textContent = message;
+        errorEl.style.display = 'block';
+    }
 }
 
 function setupThreeJS() {
@@ -163,7 +186,9 @@ async function createFractal(type) {
 }
 
 function createMandelbulb() {
-    const geometry = new THREE.IcosahedronGeometry(2, state.quality === 'high' ? 4 : state.quality === 'medium' ? 3 : 2);
+    // Reduced complexity for faster initial load
+    const subdivisions = state.quality === 'high' ? 3 : state.quality === 'medium' ? 2 : 1;
+    const geometry = new THREE.IcosahedronGeometry(2, subdivisions);
 
     // Apply mandelbulb deformation
     const positions = geometry.attributes.position.array;
@@ -200,7 +225,8 @@ function createMandelbulb() {
 }
 
 function createJulia3D() {
-    const geometry = new THREE.SphereGeometry(2, state.quality === 'high' ? 64 : 32, state.quality === 'high' ? 64 : 32);
+    const segments = state.quality === 'high' ? 48 : state.quality === 'medium' ? 32 : 24;
+    const geometry = new THREE.SphereGeometry(2, segments, segments);
 
     const positions = geometry.attributes.position.array;
     for (let i = 0; i < positions.length; i += 3) {
@@ -306,7 +332,8 @@ function createMenger() {
 }
 
 function createPsychedelicSphere() {
-    const geometry = new THREE.SphereGeometry(2, state.quality === 'high' ? 128 : 64, state.quality === 'high' ? 128 : 64);
+    const segments = state.quality === 'high' ? 64 : state.quality === 'medium' ? 48 : 32;
+    const geometry = new THREE.SphereGeometry(2, segments, segments);
 
     const positions = geometry.attributes.position.array;
     for (let i = 0; i < positions.length; i += 3) {
@@ -337,7 +364,8 @@ function createPsychedelicSphere() {
 
 // ==================== PARTICLES ====================
 function createParticles() {
-    const particleCount = state.quality === 'high' ? 2000 : state.quality === 'medium' ? 1000 : 500;
+    // Reduced particle count for better performance
+    const particleCount = state.quality === 'high' ? 1000 : state.quality === 'medium' ? 500 : 300;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -682,12 +710,37 @@ function onWindowResize() {
 }
 
 // ==================== PROGRESS ====================
-function updateProgress(percent) {
+function updateProgress(percent, text) {
     const progressFill = document.getElementById('progress-fill');
+    const loadingText = document.getElementById('loading-text');
     if (progressFill) {
         progressFill.style.width = percent + '%';
     }
+    if (loadingText && text) {
+        loadingText.textContent = text;
+    }
 }
 
+// ==================== LOADING TIMEOUT ====================
+let loadTimeout;
+
 // ==================== START APPLICATION ====================
-window.addEventListener('DOMContentLoaded', init);
+window.addEventListener('DOMContentLoaded', () => {
+    // Set timeout for loading
+    loadTimeout = setTimeout(() => {
+        if (typeof THREE === 'undefined') {
+            showError('La carga está tardando demasiado. Posibles causas:\n\n' +
+                      '1. Conexión lenta a internet\n' +
+                      '2. CDN de Three.js no disponible\n' +
+                      '3. Bloqueador de contenido activo\n\n' +
+                      'Intenta:\n' +
+                      '- Recargar la página\n' +
+                      '- Verificar tu conexión\n' +
+                      '- Desactivar bloqueadores de contenido');
+        }
+    }, 10000); // 10 seconds timeout
+
+    init().then(() => {
+        clearTimeout(loadTimeout);
+    });
+});
