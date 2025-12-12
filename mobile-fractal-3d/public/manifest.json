@@ -1,0 +1,26 @@
+{
+  "name": "Fractal 3D Experience",
+  "short_name": "Fractal3D",
+  "description": "Experiencia inmersiva de fractales 3D psicodélicos",
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "#000000",
+  "theme_color": "#ff0080",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%23ff0080'/><stop offset='100%' style='stop-color:%2300ffff'/></linearGradient></defs><circle cx='50' cy='50' r='45' fill='url(%23g)'/><circle cx='50' cy='50' r='30' fill='none' stroke='white' stroke-width='2'/><circle cx='50' cy='50' r='15' fill='white'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%23ff0080'/><stop offset='100%' style='stop-color:%2300ffff'/></linearGradient></defs><circle cx='50' cy='50' r='45' fill='url(%23g)'/><circle cx='50' cy='50' r='30' fill='none' stroke='white' stroke-width='2'/><circle cx='50' cy='50' r='15' fill='white'/></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["entertainment", "graphics"],
+  "screenshots": []
+}
