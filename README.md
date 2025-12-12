@@ -8,6 +8,41 @@
     <img src="https://api.visitorbadge.io/api/visitors?user=0xARCOS&repo=fractol_42&label=visitas&countColor=%2385e3ff&style=flat&labelStyle=none"/>
 </div>
 
+---
+
+## 🔥 NUEVO: FRACTAL SOUL - Experiencia Viral para Redes Sociales
+
+<div align="center">
+
+### ✨ Descubre el Fractal ÚNICO de Tu Alma ✨
+
+![Fractal Soul](https://img.shields.io/badge/✨-FRACTAL_SOUL-ff69b4?style=for-the-badge)
+![TikTok Ready](https://img.shields.io/badge/📱-TikTok_Ready-black?style=for-the-badge)
+![Instagram](https://img.shields.io/badge/📸-IG_Ready-E4405F?style=for-the-badge)
+
+**Cada persona tiene un fractal único basado en su nombre y fecha de nacimiento!**
+
+```bash
+./fractol soul "Tu Nombre" 15 06 1995
+```
+
+🎯 **[👉 VER GUÍA COMPLETA FRACTAL SOUL](./VIRAL_README.md) 👈**
+
+</div>
+
+### 🌟 Nuevas Features Virales:
+
+- 🔮 **Fractal Soul Generator** - Tu fractal personal único
+- ⭐ **Horóscopo Fractal Diario** - Energía cósmica del día
+- 👑 **Fractales de Celebridades** - Messi, Bad Bunny, Einstein...
+- 🔑 **Share Codes** - Comparte tu fractal en redes sociales
+- 📸 **Screenshots optimizados** para Instagram/TikTok
+- 💬 **Comunidad** - Colecciona share codes de tus amigos!
+
+---
+
+## 📚 Proyecto Original: Fract-ol (42 School)
+
 Explora el mundo de los fractales con este visualizador interactivo desarrollado con **MiniLibX** (42). Sumérgete en las complejidades matemáticas y visuales de los conjuntos Mandelbrot, Julia y el atractor de Lorenz.
 
 ---

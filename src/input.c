@@ -30,8 +30,13 @@ void	set_julia_params(t_data *data, int argc, char **argv)
 	}
 }
 
+void	parse_viral_arguments(t_data *data, int argc, char **argv);
+
 void	parse_arguments(t_data *data, int argc, char **argv)
 {
+	parse_viral_arguments(data, argc, argv);
+	if (data->fractal_type != -1)
+		return ;
 	if (argc >= 2)
 	{
 		if (ft_strcmp_insensitive(argv[1], "julia") == 0)
