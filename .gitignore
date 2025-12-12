@@ -30,3 +30,5 @@ videos/
 # Temporary files
 tmp/
 temp/
+fractal-3d-deploy.tar.gz
+fractal-3d-ready-to-deploy/
