@@ -43,9 +43,9 @@ const fragmentShaderSource = `
     uniform int colorScheme;
     uniform int autoRotate;
 
-    #define MAX_STEPS 64
+    #define MAX_STEPS 48
     #define MAX_DIST 20.0
-    #define SURF_DIST 0.001
+    #define SURF_DIST 0.01
 
     // Smooth minimum for blending
     float smin(float a, float b, float k) {
@@ -145,12 +145,12 @@ const fragmentShaderSource = `
         return d;
     }
 
-    // Mandelbox
+    // Mandelbox (optimized)
     float mandelbox(vec3 p) {
         vec3 offset = p;
         float dr = 1.0;
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 5; i++) {
             // Box fold
             p = clamp(p, -1.0, 1.0) * 2.0 - p;
 
@@ -165,13 +165,13 @@ const fragmentShaderSource = `
             dr = dr * 2.0 + 1.0;
         }
 
-        return length(p) / abs(dr) - 0.001;
+        return length(p) / abs(dr);
     }
 
-    // Apollonian Gasket
+    // Apollonian Gasket (optimized)
     float apollonian(vec3 p) {
         float scale = 1.0;
-        for(int i = 0; i < 8; i++) {
+        for(int i = 0; i < 4; i++) {
             p = -1.0 + 2.0 * fract(0.5 * p + 0.5);
             float r2 = dot(p, p);
             float k = 1.2 / r2;
@@ -181,13 +181,13 @@ const fragmentShaderSource = `
         return 0.25 * abs(p.y) / scale;
     }
 
-    // Kleinian Sphere (IFS fractal)
+    // Kleinian Sphere (optimized)
     float kleinian(vec3 p) {
         float k1 = 1.0;
         float k2 = 1.5;
         float d = -100.0;
 
-        for(int i = 0; i < 8; i++) {
+        for(int i = 0; i < 4; i++) {
             p = 2.0 * clamp(p, -k1, k1) - p;
             float r2 = dot(p, p);
             float k = k2 / r2;
@@ -198,42 +198,13 @@ const fragmentShaderSource = `
         return d;
     }
 
-    // Lorenz Attractor (Chaotic System)
-    float lorenz(vec3 p) {
-        vec3 pos = p * 0.3;
-        float sigma = 10.0;
-        float rho = 28.0;
-        float beta = 8.0 / 3.0;
-
-        vec3 attractor = vec3(0.0);
-        vec3 current = vec3(0.1, 0.0, 0.0);
-
-        // Simulate attractor points
-        float minDist = 1000.0;
-        for(int i = 0; i < 50; i++) {
-            float dt = 0.01;
-            vec3 derivative = vec3(
-                sigma * (current.y - current.x),
-                current.x * (rho - current.z) - current.y,
-                current.x * current.y - beta * current.z
-            );
-            current += derivative * dt;
-
-            // Distance to attractor path
-            float dist = length(pos - current * 0.05);
-            minDist = min(minDist, dist);
-        }
-
-        return minDist - 0.05;
-    }
-
-    // Mandelbrot 3D (Quadratic version)
+    // Mandelbrot 3D (optimized)
     float mandelbrot3d(vec3 p) {
         vec3 z = p;
         float dr = 1.0;
         float r = 0.0;
 
-        for(int i = 0; i < 8; i++) {
+        for(int i = 0; i < 5; i++) {
             r = length(z);
             if(r > 2.0) break;
 
@@ -242,8 +213,8 @@ const fragmentShaderSource = `
             float phi = atan(z.y, z.x);
 
             // Power 2
-            dr = pow(r, 1.0) * 2.0 * dr + 1.0;
-            float zr = pow(r, 2.0);
+            dr = r * 2.0 * dr + 1.0;
+            float zr = r * r;
             theta = theta * 2.0;
             phi = phi * 2.0;
 
@@ -254,26 +225,18 @@ const fragmentShaderSource = `
         return 0.5 * log(r) * r / dr;
     }
 
-    // Torus Knot Fractal
+    // Torus Knot (optimized)
     float torusKnot(vec3 p) {
-        float t = time * 0.5;
-        float p1 = 2.0;
-        float p2 = 3.0;
-
+        float t = time * 0.3;
         float r = length(p.xz);
         float angle = atan(p.z, p.x);
 
         vec2 q = vec2(
             r - 0.8,
-            p.y - 0.3 * sin(p1 * angle + t)
+            p.y - 0.3 * sin(2.0 * angle + t)
         );
 
-        float d = length(q) - 0.2;
-
-        // Add fractal detail
-        d += 0.05 * sin(p.x * 10.0 + t) * cos(p.y * 10.0) * sin(p.z * 10.0);
-
-        return d;
+        return length(q) - 0.2;
     }
 
     // Octahedron Fractal
@@ -301,10 +264,9 @@ const fragmentShaderSource = `
         if(fractalType == 5) return mandelbox(p);
         if(fractalType == 6) return apollonian(p);
         if(fractalType == 7) return kleinian(p);
-        if(fractalType == 8) return lorenz(p);
-        if(fractalType == 9) return mandelbrot3d(p);
-        if(fractalType == 10) return torusKnot(p);
-        if(fractalType == 11) return octahedron(p);
+        if(fractalType == 8) return mandelbrot3d(p);
+        if(fractalType == 9) return torusKnot(p);
+        if(fractalType == 10) return octahedron(p);
         return mandelbulb(p);
     }
 
@@ -509,10 +471,9 @@ function render() {
         mandelbox: 5,
         apollonian: 6,
         kleinian: 7,
-        lorenz: 8,
-        mandelbrot3d: 9,
-        torusknot: 10,
-        octahedron: 11
+        mandelbrot3d: 8,
+        torusknot: 9,
+        octahedron: 10
     };
     gl.uniform1i(gl.getUniformLocation(program, 'fractalType'), fractalMap[state.fractal] || 0);
 
@@ -642,7 +603,6 @@ function setupUI() {
                     'mandelbox': 'Mandelbox',
                     'apollonian': 'Apollonian Gasket',
                     'kleinian': 'Kleinian Sphere',
-                    'lorenz': 'Lorenz Attractor',
                     'mandelbrot3d': 'Mandelbrot 3D',
                     'torusknot': 'Torus Knot',
                     'octahedron': 'Octahedron'
