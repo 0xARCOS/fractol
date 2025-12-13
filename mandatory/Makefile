@@ -1,9 +1,9 @@
 NAME		= fractol
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -Iincludes -Iminilibx-linux
+CFLAGS		= -Wall -Wextra -Werror -Iincludes -I../minilibx-linux
 
-MLX_DIR		= minilibx-linux
+MLX_DIR		= ../minilibx-linux
 MLX_FLAGS	= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
 SRC_DIR		= src
