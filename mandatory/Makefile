@@ -13,21 +13,14 @@ SRCS		= \
 	$(SRC_DIR)/hooks.c \
 	$(SRC_DIR)/julia.c \
 	$(SRC_DIR)/mandelbrot.c \
-	$(SRC_DIR)/lorenz.c \
 	$(SRC_DIR)/render.c \
-	$(SRC_DIR)/input.c \
-	$(SRC_DIR)/soul_generator.c \
-	$(SRC_DIR)/soul_input.c \
-	$(SRC_DIR)/horoscope.c \
-	$(SRC_DIR)/celebrities.c \
-	$(SRC_DIR)/viral_display.c \
+	$(SRC_DIR)/input.c
 
 OBJS		= $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@make -C $(MLX_DIR)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(MLX_FLAGS)
 
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c

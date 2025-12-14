@@ -12,15 +12,11 @@
 
 #include "fract-ol.h"
 
-static void	init_lorenz_defaults(t_data *data)
+static void	init_defaults(t_data *data)
 {
-	data->lorenz_speed = 0.01;
-	data->sigma = 10.0;
-	data->rho = 28.0;
-	data->beta = 8.0 / 3.0;
 	data->x_offset = 0;
 	data->y_offset = 0;
-	data->color_shift = 255;
+	data->color_shift = 0;
 	data->fractal_type = MANDELBROT;
 	data->max_iter = 100;
 	data->zoom = 1.0;
@@ -62,7 +58,7 @@ static int	init_image(t_data *data)
 
 int	init(t_data *data)
 {
-	init_lorenz_defaults(data);
+	init_defaults(data);
 	if (init_mlx(data) == MLX_ERROR)
 		return (MLX_ERROR);
 	if (init_image(data) == MLX_ERROR)

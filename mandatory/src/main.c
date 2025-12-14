@@ -71,13 +71,13 @@ int	main(int argc, char **argv)
 	parse_arguments(&data, argc, argv);
 	if (data.fractal_type == -1)
 	{
-		write(1,
-			"Uso: ./fractol [mandelbrot | julia [c_real c_imag] | lorenz]\n",
-			61);
+		write(1, "Uso: ./fractol [mandelbrot | julia [c_real c_imag]]\n", 53);
 		return (1);
 	}
 	render_fractal(&data);
 	mlx_key_hook(data.win_ptr, handle_key, &data);
+	mlx_mouse_hook(data.win_ptr, handle_mouse, &data);
+	mlx_hook(data.win_ptr, 17, 0, handle_close, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }
