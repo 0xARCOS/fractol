@@ -20,6 +20,10 @@ static void	init_defaults(t_data *data)
 	data->fractal_type = MANDELBROT;
 	data->max_iter = 100;
 	data->zoom = 1.0;
+	data->lorenz_speed = 0.01;
+	data->sigma = 10.0;
+	data->rho = 28.0;
+	data->beta = 8.0 / 3.0;
 }
 
 static int	init_mlx(t_data *data)

@@ -71,7 +71,9 @@ int	main(int argc, char **argv)
 	parse_arguments(&data, argc, argv);
 	if (data.fractal_type == -1)
 	{
-		write(1, "Uso: ./fractol [mandelbrot | julia [c_real c_imag]]\n", 53);
+		write(1,
+			"Uso: ./fractol [mandelbrot | julia [c_real c_imag] | lorenz]\n",
+			61);
 		return (1);
 	}
 	render_fractal(&data);

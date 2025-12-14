@@ -13,6 +13,7 @@ SRCS		= \
 	$(SRC_DIR)/hooks.c \
 	$(SRC_DIR)/julia.c \
 	$(SRC_DIR)/mandelbrot.c \
+	$(SRC_DIR)/lorenz.c \
 	$(SRC_DIR)/render.c \
 	$(SRC_DIR)/input.c
 

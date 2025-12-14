@@ -41,5 +41,7 @@ void	parse_arguments(t_data *data, int argc, char **argv)
 		}
 		else if (ft_strcmp_insensitive(argv[1], "mandelbrot") == 0)
 			data->fractal_type = MANDELBROT;
+		else if (ft_strcmp_insensitive(argv[1], "lorenz") == 0)
+			data->fractal_type = LORENZ;
 	}
 }

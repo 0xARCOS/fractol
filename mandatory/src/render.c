@@ -24,6 +24,8 @@ void	render_fractal(t_data *data)
 		draw_mandelbrot(data);
 	else if (data->fractal_type == JULIA)
 		draw_julia(data);
+	else if (data->fractal_type == LORENZ)
+		draw_lorenz(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr, 0, 0);
 }
 

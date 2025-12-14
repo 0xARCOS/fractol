@@ -31,6 +31,7 @@ int	handle_key(int keycode, t_data *data)
 	handle_zoom(keycode, data);
 	apply_color_change(keycode, data);
 	handle_reset(keycode, data);
+	handle_lorenz_keys(keycode, data);
 	render_fractal(data);
 	return (0);
 }
@@ -49,7 +50,36 @@ void	handle_reset(int keycode, t_data *data)
 			data->c_real = -0.7;
 			data->c_imag = 0.27015;
 		}
+		else if (data->fractal_type == LORENZ)
+		{
+			data->sigma = 10.0;
+			data->rho = 28.0;
+			data->beta = 8.0 / 3.0;
+			data->lorenz_speed = 0.01;
+		}
 	}
+}
+
+void	handle_lorenz_keys(int keycode, t_data *data)
+{
+	if (data->fractal_type != LORENZ)
+		return ;
+	if (keycode == UP)
+		data->rho += 1.0;
+	else if (keycode == DOWN)
+		data->rho -= 1.0;
+	else if (keycode == LEFT)
+		data->sigma -= 0.5;
+	else if (keycode == RIGHT)
+		data->sigma += 0.5;
+	else if (keycode == PLUS)
+		data->beta += 0.1;
+	else if (keycode == MINUS)
+		data->beta -= 0.1;
+	else if (keycode == W)
+		data->lorenz_speed *= 1.1;
+	else if (keycode == S)
+		data->lorenz_speed /= 1.1;
 }
 
 void	handle_movement(int keycode, t_data *data)

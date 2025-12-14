@@ -39,6 +39,7 @@
 # define COLOR 99
 # define MANDELBROT 0
 # define JULIA 1
+# define LORENZ 2
 
 typedef struct s_data
 {
@@ -57,6 +58,10 @@ typedef struct s_data
 	int		max_iter;
 	double	c_real;
 	double	c_imag;
+	double	rho;
+	double	sigma;
+	double	beta;
+	double	lorenz_speed;
 }			t_data;
 
 int			init(t_data *data);
@@ -64,6 +69,7 @@ void		handle_movement(int keycode, t_data *data);
 void		handle_zoom(int keycode, t_data *data);
 void		apply_color_change(int keycode, t_data *data);
 void		handle_reset(int keycode, t_data *data);
+void		handle_lorenz_keys(int keycode, t_data *data);
 int			handle_key(int keycode, t_data *data);
 int			handle_mouse(int button, int x, int y, t_data *data);
 int			handle_close(t_data *data);
@@ -80,6 +86,10 @@ void		draw_mandelbrot(t_data *data);
 int			julia(double x, double y, t_data *data);
 void		draw_julia_pixel(t_data *data, int x, int y);
 void		draw_julia(t_data *data);
+
+int			get_lorenz_color(double z);
+void		update_lorenz(double *x, double *y, double *z, t_data *data);
+void		draw_lorenz(t_data *data);
 
 int			ft_strcmp_insensitive(const char *s1, const char *s2);
 double		ft_atof(const char *str);
